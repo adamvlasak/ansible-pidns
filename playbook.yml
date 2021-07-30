@@ -1,0 +1,61 @@
+---
+- name: setup raspberry pi as DNS server
+  hosts: all
+  become: yes
+  tasks:
+    - name: install dnscrypt-proxy
+      apk:
+        name: dnscrypt-proxy
+        state: present
+    - name: configure dnscrypt-proxy
+      template:
+        src: dnscrypt-proxy.toml.j2
+        dest: /etc/dnscrypt-proxy/dnscrypt-proxy.toml
+        owner: root
+        group: root
+        mode: 0600
+    - name: download blocklist generator
+      get_url:
+        url: https://github.com/DNSCrypt/dnscrypt-proxy/raw/master/utils/generate-domains-blocklist/generate-domains-blocklist.py
+        dest: /tmp/generate-domains-blocklist.py
+        owner: root
+        group: root
+        mode: 0600
+    - name: provision domains-blocklist.conf
+      template:
+        src: domains-blocklist.conf.j2
+        dest: /tmp/domains-blocklist.conf
+        owner: root
+        group: root
+        mode: 0600
+    - name: provision templates/domains-blocklist-local-additions.txt
+      template:
+        src: domains-blocklist-local-additions.txt.j2
+        dest: /tmp/domains-blocklist-local-additions.txt
+        owner: root
+        group: root
+        mode: 0600
+    - name: provision domains-allowlist.txt from github
+      get_url:
+        url: https://github.com/DNSCrypt/dnscrypt-proxy/raw/master/utils/generate-domains-blocklist/domains-allowlist.txt
+        dest: /tmp/domains-allowlist.txt
+        owner: root
+        group: root
+        mode: 0600
+    - name: create empty domains-time-restricted.txt
+      file:
+        dest: /tmp/domains-time-restricted.txt
+        state: touch
+        owner: root
+        group: root
+        mode: 0600
+    - name: generate block-names.txt
+      shell: "/usr/bin/python3 /tmp/generate-domains-blocklist.py -o /etc/dnscrypt-proxy/block-names.txt"
+      args:
+        chdir: /tmp
+      tags:
+        - generate
+    - name: restart dnscrypt-proxy
+      service:
+        name: dnscrypt-proxy
+        state: restarted
