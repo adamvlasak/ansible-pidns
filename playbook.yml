@@ -15,7 +15,7 @@
         dest: /etc/dnscrypt-proxy/dnscrypt-proxy.toml
         owner: dnscrypt
         group: dnscrypt
-        mode: 0600
+        mode: 0400
       tags:
         - configure
     - name: provision blocked-ips.txt
@@ -24,9 +24,27 @@
         dest: /etc/dnscrypt-proxy/blocked-ips.txt
         owner: dnscrypt
         group: dnscrypt
-        mode: 0600
+        mode: 0400
       tags:
         - blocked-ips
+    - name: set permissions to /etc/dnscrypt-proxy
+      file:
+        path: /etc/dnscrypt-proxy
+        state: directory
+        owner: dnscrypt
+        group: dnscrypt
+        mode: 0500
+      tags:
+        - configure
+    - name: set permissions to /etc/dnscrypt-proxy/blocked-names.txt
+      file:
+        path: /etc/dnscrypt-proxy/blocked-names.txt
+        state: file
+        owner: dnscrypt
+        group: dnscrypt
+        mode: 0400
+      tags:
+        - configure
     - name: prepare directory for blocklist generator and its config
       file:
         path: /etc/dnscrypt-proxy/block-names-generator
@@ -34,13 +52,15 @@
         owner: dnscrypt
         group: dnscrypt
         mode: 0500
+      tags:
+        - configure
     - name: download blocklist generator
       get_url:
         url: https://github.com/DNSCrypt/dnscrypt-proxy/raw/master/utils/generate-domains-blocklist/generate-domains-blocklist.py
         dest: /etc/dnscrypt-proxy/block-names-generator/generate-domains-blocklist.py
         owner: dnscrypt
         group: dnscrypt
-        mode: 0600
+        mode: 0400
       tags:
         - blocked-names
     - name: provision domains-blocklist.conf
@@ -49,7 +69,7 @@
         dest: /etc/dnscrypt-proxy/block-names-generator/domains-blocklist.conf
         owner: dnscrypt
         group: dnscrypt
-        mode: 0600
+        mode: 0400
       tags:
         - blocked-names
     - name: provision templates/domains-blocklist-local-additions.txt
@@ -58,7 +78,7 @@
         dest: /etc/dnscrypt-proxy/block-names-generator/domains-blocklist-local-additions.txt
         owner: dnscrypt
         group: dnscrypt
-        mode: 0600
+        mode: 0400
       tags:
         - blocked-names
     - name: provision domains-allowlist.txt from github
@@ -67,7 +87,7 @@
         dest: /etc/dnscrypt-proxy/block-names-generator/domains-allowlist.txt
         owner: dnscrypt
         group: dnscrypt
-        mode: 0600
+        mode: 0400
       tags:
         - blocked-names
     - name: create empty domains-time-restricted.txt
@@ -76,7 +96,7 @@
         state: touch
         owner: dnscrypt
         group: dnscrypt
-        mode: 0600
+        mode: 0400
       tags:
         - blocked-names
     - name: provision cron script
