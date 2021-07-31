@@ -10,7 +10,7 @@
         name: dnscrypt-proxy
         state: present
       tags:
-        - configure
+        - package
     - name: configure dnscrypt-proxy
       template:
         src: dnscrypt-proxy.toml.j2
@@ -32,7 +32,19 @@
       notify:
         - dnscrypt-proxy
       tags:
-        - blocked-ips
+        - configure
+    - name: provision forwarding-rules.txt
+      template:
+        src: forwarding-rules.txt.j2
+        dest: /etc/dnscrypt-proxy/forwarding-rules.txt
+        owner: dnscrypt
+        group: dnscrypt
+        mode: 0400
+      when: dnscrypt_proxy_forwarding_rules is defined
+      notify:
+        - dnscrypt-proxy
+      tags:
+        - configure
     - name: set permissions to /etc/dnscrypt-proxy
       file:
         path: /etc/dnscrypt-proxy
@@ -59,7 +71,7 @@
         group: dnscrypt
         mode: 0500
       tags:
-        - configure
+        - blocked-names
     - name: download blocklist generator
       get_url:
         url: https://github.com/DNSCrypt/dnscrypt-proxy/raw/master/utils/generate-domains-blocklist/generate-domains-blocklist.py

@@ -5,3 +5,6 @@ dnscrypt_proxy_listen_address: 0.0.0.0:53
 dnscrypt_proxy_fallback_resolver: automatic
 # automatic or name from https://dnscrypt.info/public-servers
 dnscrypt_proxy_server_names: automatic
+# forwarding rules see https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Forwarding
+dnscrypt_proxy_forwarding_rules:
+  - "1.168.192.in-addr.arpa 192.168.1.1"

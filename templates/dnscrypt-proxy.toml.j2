@@ -330,7 +330,9 @@ reject_ttl = 600
 
 ## See the `/usr/share/dnscrypt-proxy/example-forwarding-rules.txt` file for an example
 
-# forwarding_rules = '/etc/dnscrypt-proxy/forwarding-rules.txt'
+{% if dnscrypt_proxy_forwarding_rules is defined %}
+forwarding_rules = '/etc/dnscrypt-proxy/forwarding-rules.txt'
+{% endif %}
 
 
 
