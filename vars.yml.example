@@ -1,4 +1,7 @@
 ---
+# be careful when using 0.0.0.0 on public IP!
 dnscrypt_proxy_listen_address: 0.0.0.0:53
-dnscrypt_proxy_fallback_resolver: 9.9.9.9:53
-dnscrypt_proxy_server_names: cloudflare
+# automatic or your desired IP of fallback DNS server
+dnscrypt_proxy_fallback_resolver: automatic
+# automatic or name from https://dnscrypt.info/public-servers
+dnscrypt_proxy_server_names: automatic

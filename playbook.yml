@@ -18,6 +18,8 @@
         owner: dnscrypt
         group: dnscrypt
         mode: 0400
+      notify:
+        - dnscrypt-proxy
       tags:
         - configure
     - name: provision blocked-ips.txt
@@ -27,6 +29,8 @@
         owner: dnscrypt
         group: dnscrypt
         mode: 0400
+      notify:
+        - dnscrypt-proxy
       tags:
         - blocked-ips
     - name: set permissions to /etc/dnscrypt-proxy
@@ -74,7 +78,7 @@
         mode: 0400
       tags:
         - blocked-names
-    - name: provision templates/domains-blocklist-local-additions.txt
+    - name: provision domains-blocklist-local-additions.txt
       template:
         src: domains-blocklist-local-additions.txt.j2
         dest: /etc/dnscrypt-proxy/block-names-generator/domains-blocklist-local-additions.txt
@@ -110,3 +114,8 @@
         mode: 0500
       tags:
         - cron
+  handlers:
+    - name: dnscrypt-proxy
+      service:
+        name: dnscrypt-proxy
+        state: restarted

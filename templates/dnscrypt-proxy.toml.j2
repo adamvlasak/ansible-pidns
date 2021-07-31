@@ -29,7 +29,9 @@
 ##
 ## Remove the leading # first to enable this; lines starting with # are ignored.
 
+{% if dnscrypt_proxy_server_names != 'automatic' %}
 server_names = ['{{ dnscrypt_proxy_server_names }}']
+{% endif %}
 
 
 ## List of local addresses and ports to listen to. Can be IPv4 and/or IPv6.
@@ -225,8 +227,11 @@ cert_refresh_delay = 240
 ##
 ## If more than one resolver is specified, they will be tried in sequence.
 
+{% if dnscrypt_proxy_fallback_resolver != 'automatic' %}
 fallback_resolvers = ['{{ dnscrypt_proxy_fallback_resolver }}']
-
+{% else %}
+fallback_resolvers = ['9.9.9.9:53']
+{% endif %}
 
 ## Always use the fallback resolver before the system DNS settings.
 
