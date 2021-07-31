@@ -1,0 +1,4 @@
+---
+dnscrypt_proxy_listen_address: 0.0.0.0:53
+dnscrypt_proxy_fallback_resolver: 9.9.9.9:53
+dnscrypt_proxy_server_names: cloudflare

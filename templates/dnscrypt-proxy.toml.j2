@@ -29,15 +29,14 @@
 ##
 ## Remove the leading # first to enable this; lines starting with # are ignored.
 
-# server_names = ['scaleway-fr', 'google', 'yandex', 'cloudflare']
-server_names = ['cloudflare-security']
+server_names = ['{{ dnscrypt_proxy_server_names }}']
 
 
 ## List of local addresses and ports to listen to. Can be IPv4 and/or IPv6.
 ## Example with both IPv4 and IPv6:
 ## listen_addresses = ['127.0.0.1:53', '[::1]:53']
 
-listen_addresses = ['0.0.0.0:53']
+listen_addresses = ['{{ dnscrypt_proxy_listen_address }}']
 
 
 ## Maximum number of simultaneous client connections to accept
@@ -226,7 +225,7 @@ cert_refresh_delay = 240
 ##
 ## If more than one resolver is specified, they will be tried in sequence.
 
-fallback_resolvers = ['192.168.10.1:53']
+fallback_resolvers = ['{{ dnscrypt_proxy_fallback_resolver }}']
 
 
 ## Always use the fallback resolver before the system DNS settings.
