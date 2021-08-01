@@ -54,6 +54,18 @@
         mode: 0500
       tags:
         - configure
+    - name: provision allowed-names.txt
+      template:
+        src: allowed-names.txt.j2
+        dest: /etc/dnscrypt-proxy/allowed-names.txt
+        owner: dnscrypt
+        group: dnscrypt
+        mode: 0400
+      when: dnscrypt_proxy_domain_allowed_names is defined
+      notify:
+        - dnscrypt-proxy
+      tags:
+        - configure
     - name: set permissions to /etc/dnscrypt-proxy/blocked-names.txt
       file:
         path: /etc/dnscrypt-proxy/blocked-names.txt

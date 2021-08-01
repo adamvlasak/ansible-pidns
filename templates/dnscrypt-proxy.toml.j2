@@ -543,7 +543,7 @@ cache_neg_max_ttl = 600
   # log_format = 'tsv'
 
 
-
+{% if dnscrypt_proxy_domain_allowed_names is defined %}
 ######################################################
 #   Pattern-based allow lists (blocklists bypass)   #
 ######################################################
@@ -558,17 +558,17 @@ cache_neg_max_ttl = 600
 
   ## Path to the file of allow list rules (absolute, or relative to the same directory as the config file)
 
-  # allowed_names_file = '/etc/dnscrypt-proxy/allowed-names.txt'
-
+  allowed_names_file = '/etc/dnscrypt-proxy/allowed-names.txt'
 
   ## Optional path to a file logging allowed queries
 
-  # log_file = '/var/log/dnscrypt-proxy/allowed-names.log'
+  log_file = '/var/log/dnscrypt-proxy/allowed-names.log'
 
 
   ## Optional log format: tsv or ltsv (default: tsv)
 
   # log_format = 'tsv'
+{% endif %}
 
 
 
