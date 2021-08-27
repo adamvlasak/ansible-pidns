@@ -1,0 +1,67 @@
+---
+- name: install dnscrypt-proxy
+  apk:
+    name: dnscrypt-proxy
+    state: present
+  tags:
+    - package
+
+- name: configure dnscrypt-proxy
+  template:
+    src: dnscrypt-proxy.toml.j2
+    dest: /etc/dnscrypt-proxy/dnscrypt-proxy.toml
+    owner: dnscrypt
+    group: dnscrypt
+    mode: 0400
+  notify:
+    - dnscrypt-proxy
+  tags:
+    - configure
+
+- name: provision allowed-names.txt
+  template:
+    src: allowed-names.txt.j2
+    dest: /etc/dnscrypt-proxy/allowed-names.txt
+    owner: dnscrypt
+    group: dnscrypt
+    mode: 0400
+  when: dnscrypt_proxy_allowed_names is defined
+  notify:
+    - dnscrypt-proxy
+  tags:
+    - configure
+
+- name: provision blocked-ips.txt
+  template:
+    src: blocked-ips.txt.j2
+    dest: /etc/dnscrypt-proxy/blocked-ips.txt
+    owner: dnscrypt
+    group: dnscrypt
+    mode: 0400
+  notify:
+    - dnscrypt-proxy
+  tags:
+    - configure
+
+- name: provision forwarding-rules.txt
+  template:
+    src: forwarding-rules.txt.j2
+    dest: /etc/dnscrypt-proxy/forwarding-rules.txt
+    owner: dnscrypt
+    group: dnscrypt
+    mode: 0400
+  when: dnscrypt_proxy_forwarding_rules is defined
+  notify:
+    - dnscrypt-proxy
+  tags:
+    - configure
+
+- name: set permissions to /etc/dnscrypt-proxy
+  file:
+    path: /etc/dnscrypt-proxy
+    state: directory
+    owner: dnscrypt
+    group: dnscrypt
+    mode: 0500
+  tags:
+    - configure

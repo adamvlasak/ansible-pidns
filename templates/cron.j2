@@ -1,4 +1,0 @@
-#!/bin/sh
-cd /etc/dnscrypt-proxy/block-names-generator && /usr/bin/python3 /etc/dnscrypt-proxy/block-names-generator/generate-domains-blocklist.py -o /etc/dnscrypt-proxy/blocked-names.txt
-wc -l /etc/dnscrypt-proxy/blocked-names.txt >> /tmp/blocked-names-stats.txt
-/etc/init.d/dnscrypt-proxy restart

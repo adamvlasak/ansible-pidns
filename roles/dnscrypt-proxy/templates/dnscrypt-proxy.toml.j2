@@ -502,7 +502,7 @@ cache_neg_max_ttl = 600
 
   ## Path to the file of blocking rules (absolute, or relative to the same directory as the config file)
 
-  blocked_names_file = '/etc/dnscrypt-proxy/blocked-names.txt'
+  blocked_names_file = '{{ blocked_names_path }}'
 
 
   ## Optional path to a file logging blocked queries
@@ -543,7 +543,7 @@ cache_neg_max_ttl = 600
   # log_format = 'tsv'
 
 
-{% if dnscrypt_proxy_domain_allowed_names is defined %}
+{% if dnscrypt_proxy_allowed_names is defined %}
 ######################################################
 #   Pattern-based allow lists (blocklists bypass)   #
 ######################################################

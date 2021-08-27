@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+cd {{ blocked_names_generator_path }} && \
+    /usr/bin/python3 {{ blocked_names_generator_path }}/generate-domains-blocklist.py \
+    -o {{ blocked_names_path }}
+
+wc -l {{ blocked_names_path }} >> /tmp/blocked-names-stats.txt
+
+chmod 0400 {{ blocked_names_path }}
+chown dnscrypt:dnscrypt {{ blocked_names_path }}
+
+/etc/init.d/dnscrypt-proxy restart
