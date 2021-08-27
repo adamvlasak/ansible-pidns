@@ -25,14 +25,12 @@ Then create `hosts` file (ansible inventory):
 # put your ip address here, e.g.:
 192.168.1.250
 ```
+## Provisioning & testing out
 
-Lastly run this command:
-
-`ansible-playbook -i hosts playbook.yml --check --diff`
+`$ make test`
 
 > this will only test if it would be succesful
 
-`ansible-playbook -i hosts playbook.yml --diff`
+`$ make provision`
 
 > this will setup your dnscrypt-proxy
-
