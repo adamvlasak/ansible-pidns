@@ -8,6 +8,7 @@
     mode: 0500
   tags:
     - blocked-names
+
 - name: download blocklist generator
   get_url:
     url: https://github.com/DNSCrypt/dnscrypt-proxy/raw/master/utils/generate-domains-blocklist/generate-domains-blocklist.py
@@ -17,6 +18,7 @@
     mode: 0400
   tags:
     - blocked-names
+
 - name: provision domains-blocklist.conf
   template:
     src: domains-blocklist.conf.j2
@@ -26,6 +28,7 @@
     mode: 0400
   tags:
     - blocked-names
+
 - name: provision domains-blocklist-local-additions.txt
   template:
     src: domains-blocklist-local-additions.txt.j2
@@ -35,6 +38,7 @@
     mode: 0400
   tags:
     - blocked-names
+
 - name: provision domains-allowlist.txt from github
   get_url:
     url: https://github.com/DNSCrypt/dnscrypt-proxy/raw/master/utils/generate-domains-blocklist/domains-allowlist.txt
@@ -44,6 +48,7 @@
     mode: 0400
   tags:
     - blocked-names
+
 - name: create empty domains-time-restricted.txt
   file:
     dest: "{{ blocked_names_generator_path }}/domains-time-restricted.txt"
@@ -53,6 +58,7 @@
     mode: 0400
   tags:
     - blocked-names
+
 - name: provision cron script
   template:
     src: cron.j2
