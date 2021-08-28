@@ -3,3 +3,6 @@ test:
 
 provision:
 	ansible-playbook playbook.yml --diff
+
+blocked-names:
+	ansible-playbook playbook.yml --diff --tags=blocked-names

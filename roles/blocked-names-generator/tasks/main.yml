@@ -16,6 +16,8 @@
     owner: dnscrypt
     group: dnscrypt
     mode: 0400
+  notify:
+    - generate blocked names
   tags:
     - blocked-names
 
@@ -26,6 +28,8 @@
     owner: dnscrypt
     group: dnscrypt
     mode: 0400
+  notify:
+    - generate blocked names
   tags:
     - blocked-names
 
@@ -36,6 +40,8 @@
     owner: dnscrypt
     group: dnscrypt
     mode: 0400
+  notify:
+    - generate blocked names
   tags:
     - blocked-names
 
@@ -46,6 +52,8 @@
     owner: dnscrypt
     group: dnscrypt
     mode: 0400
+  notify:
+    - generate blocked names
   tags:
     - blocked-names
 
@@ -56,8 +64,34 @@
     owner: dnscrypt
     group: dnscrypt
     mode: 0400
+  notify:
+    - generate blocked names
   tags:
     - blocked-names
+
+- name: prepare /usr/local/sbin directory
+  file:
+    path: /usr/local/sbin
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+  notify:
+    - generate blocked names
+  tags:
+    - blocked-names
+
+- name: provision helper script
+  template:
+    src: blocked-names-generator.sh.j2
+    dest: "{{ blocked_names_generator_helper_path }}"
+    owner: root
+    group: root
+    mode: 0500
+  notify:
+    - generate blocked names
+  tags:
+    - cron
 
 - name: provision cron script
   template:

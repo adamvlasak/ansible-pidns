@@ -34,3 +34,7 @@ Then create `hosts` file (ansible inventory):
 `$ make provision`
 
 > this will setup your dnscrypt-proxy
+
+`$ make blocked-names`
+
+> this will generate new blocked-names.txt for dnscrypt-proxy and restart service

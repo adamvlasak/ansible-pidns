@@ -1,0 +1,14 @@
+---
+- name: generate blocked names
+  command: "{{ blocked_names_generator_helper_path }}"
+  notify:
+    - dnscrypt-proxy
+  tags:
+    - blocked-names
+
+- name: dnscrypt-proxy
+  service:
+    name: dnscrypt-proxy
+    state: restarted
+  tags:
+    - blocked-names
