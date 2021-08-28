@@ -91,7 +91,7 @@
   notify:
     - generate blocked names
   tags:
-    - cron
+    - blocked-names
 
 - name: provision cron script
   template:
@@ -101,4 +101,4 @@
     group: root
     mode: 0500
   tags:
-    - cron
+    - blocked-names
